@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta name="keywords" content="Survive, Game, Script47, JavaScript, JS, HTML5, CSS">
+    <meta name="description" content="Survive - An online game to stop boredom!">
+    <meta name="author" content="Script47">
+    <link rel="icon" href="Images/icon.ico">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="JS/bootstrap.min.js"></script>
+    <script type="text/javascript" src="JS/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="CSS/styles.css">
+    <title>Survive</title>
+</head>
+
+<!--
+    Codes Version: 1.0? I dunno...
+
+    To-Do:
+
+    All things in To-Do are merely ideas.
+
+    -Achievements?
+        -Get rewards for achievements?
+    -Farming exp/levels -> Done (16/06/2014)
+        -Makes farming quicker?
+        -Grow better plants therefore increase in sales price? -> Done (16/06/2014)
+    -More types of seeds?
+    -Plant more seeds?
+	-Bulk plant/water
+    -Search Points? -> Done (05/06/2014)
+    -More HP Points? -> Done (07/06/2014)
+	-Audio? -> Done (04/06/2014)
+		-Mute/Unmute options? -> Done (07/06/2014)
+	-Display time in log -> Done (09/06/2014)
+	-Save log message -> Done (09/06/2014)
+	-Fixed health colours -> Done (09/06/2014)
+	-Fixed seeds timer bar -> Done (09/06/2014)
+	-Fixed typos and re-wrote everything (including tutorial) -> Done
+
+--->
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-top navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="javascript:void(0)">Survive</a>
+                </div>
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="javascript:void(0)" onClick="showAbout();">About Survive</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+                        <ul class="dropdown-menu" id="saveActions">
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+        <div class="col-md-12" id="farmName">
+            <input type="text" placeholder="You Farm Name" id="nameInput" onclick="setFarmName();" onblur="setFarmName();" spellcheck="false" disabled>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <h2>Actions</h2>
+                <div id="actions"></div>
+                <div id="shop"></div>
+                <div class="row" style="margin-top: 20px">
+
+                    <div class="col-md-6">
+                        Search Timer
+                        <br />
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                        <progress id="searchTimer" value="0" max="120"></progress>
+                    </div>
+
+                    <div class="col-md-6">
+                        Plantation Timer
+                        <br />
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                        <progress id="seedsTimer" value="0" max="138"></progress>
+                    </div>
+
+                    <div class="col-md-6">
+                        Bread Timer
+                        <br />
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                        <progress id="breadTimer" value="0" max="69"></progress>
+                        <input type="hidden" id="" value="0" />
+                    </div>
+
+                    <button title="Help Me!" id="moreSearchPoints" onclick="moreSearchPoints();">Click Me!</button>
+                </div>
+                <div class="col-md-6">
+                    <h3>Levels</h3>
+                    <div id="levels"></div>
+                </div>
+            </div>
+            <div class="col-md-3 log-holder">
+                <h3>Log</h3>
+                <div id="log"></div>
+            </div>
+        </div>
+    </div>
+    <div id="timeLived">Time Lived: 0 days 0 hours 0 minutes 0 seconds</div>
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse" role="navigation">
+        <div class="container-fluid" id="stats"></div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+    <div class="modal fade" id="tutorial">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Tutorial</h4>
+                </div>
+                <div class="modal-body">
+                    <h3>Goal</h3>
+                    <p>Survive for as long as you can, don't let your health reach 0. You can't just click and hope for the best, each action requires you to think ahead. Choose carefully or you could die!</p>
+                    <h3>How to Survive?</h3>
+                    <li>To find seeds, you need to go searching. It costs 50 search points to go searching.</li>
+                    <li>While you're out searching all other actions will blocked and you will have to wait until you have finished before you can do anything else.</li>
+                    <li>Searching will give you Gold or Seeds. Gold can be used to refill HP when low, buy seeds to plant or buy water to speed up the growing time.
+                        <li>Once you plant a seed you will then have to harvest the plant to turn the wheat in to bread. Then you will have two choices.</li>
+                        <li>Bread can either be eaten or sold, if you eat bread you will gain some HP if you sell bread you will gain some Gold, however choose wisely.</li>
+                        <h3>Tips & Hints</h3>
+                        <small>If you're really struggling, why not click the <i>Struggling?</i> link, it may help you out...</small>
+                        <h3>Loading Issues?</h3>
+                        <p>Click the following link to try and get the game to work:</p>
+                        <li><a href="javascript:void(0)" onclick="reset();">reset();</a>
+                        </li>
+                        <p>If the above still doesn't fix the game, then contact me via Twitter <a href="http://www.twitter.com/Script47" target="_blank">@Script47</a>.</p>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="about-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">About Survive</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="footer"></div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</body>
+
+</html>

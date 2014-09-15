@@ -1,0 +1,83 @@
+/*
+    Created on : 19-May-2014, 21:12:47
+    Author     : Script47
+	Copyright  : Script47 (c) 2014
+	Version	   : 1.7
+*/
+
+html, body {
+    height: 100%
+}
+
+body {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-align: center;
+}
+
+#stats {
+    text-align: center;
+}
+
+.navbar-fixed-bottom.navbar-inverse .navbar-nav > li > a:hover {
+    color: rgb(153, 153, 153) !important;
+}
+.navbar-fixed-bottom .navbar-nav{
+    margin: 0 auto;
+    display: table;
+    table-layout: fixed;
+    float:none;
+}
+
+.navbar-top {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#timeLived {
+    font-style: italic;
+    position: absolute;
+    bottom: 100px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+}
+
+#moreSearchPoints {
+    display: none;
+    position: absolute;
+    bottom: 0px;
+    right: 5px;
+    text-align: center;
+}
+
+
+#nameInput {
+    width: 425px;
+    font-size: 15px;
+    background-color: #eee;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    padding: 8px;
+}
+
+body > .container, body > .container > .row {
+    height: calc(100% - 100px);
+}
+
+.log-holder {
+    height: 100%;
+    background-color: #eee;
+    border-radius: 10px;
+}
+
+.log-holder #log{
+    overflow-y: auto;
+    height: calc(100% - 75px);
+}
+
+progress {
+    opacity: 0;
+}
